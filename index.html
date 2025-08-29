@@ -1,1 +1,135 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Studios 🎮</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1d1f21, #2c3e50);
+      color: #f4f4f4;
+      line-height: 1.6;
+    }
+    header {
+      background: #111;
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      animation: fadeInDown 1s ease;
+    }
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+    section {
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #ffcc00;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      background: #ffcc00;
+      color: #111;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .btn:hover {
+      background: #ffaa00;
+      transform: scale(1.05);
+    }
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .team {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: #222;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🎮 Classroom Malin 🎨</h1>
+    <p>Where creativity meets code.</p>
+  </header>
+
+  <section>
+    <h2>About Us</h2>
+    <p>We’re a small but passionate studio bringing big ideas to life. At Classroom Studios, we focus on creativity, fun, and innovation in every project we work on.</p>
+    <a href="#projects" class="btn">See Our Projects</a>
+  </section>
+
+  <section>
+    <h2>Our Mission 🚀</h2>
+    <p>To build experiences that inspire and connect people through interactive design and storytelling.</p>
+  </section>
+
+  <section>
+    <h2>Our Vision 🌍</h2>
+    <p>To grow into a global creative hub where students and dreamers become innovators and makers.</p>
+  </section>
+
+  <section id="projects">
+    <h2>Projects 🔥</h2>
+    <p>Stay tuned! We’re cooking up some exciting things for you. 👀</p>
+  </section>
+
+  <section>
+    <h2>Meet the Team 👥</h2>
+    <div class="team">
+      <div class="card">
+        <h3>Malvin</h3>
+        <p>Co-Founder, Visionary, and Tech Enthusiast.</p>
+      </div>
+      <div class="card">
+        <h3>Noku</h3>
+        <p>Co-Founder, Creative Mind, and Problem Solver.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Classroom Studios. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
