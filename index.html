@@ -1,144 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Malvin Kawenya | Unreal Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-<style>
-    /* Reset & Fonts */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Roboto', sans-serif; overflow-x: hidden; background: #0b0c10; color: #fff; }
-
-    /* Smooth scrolling */
-    html { scroll-behavior: smooth; }
-
-    /* Neon accent color */
-    :root { --accent: #FF79C6; }
-
-    /* Cursor effect */
-    body { cursor: none; }
-    .cursor { position: fixed; top: 0; left: 0; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); transition: transform 0.1s ease; mix-blend-mode: difference; }
-
-    /* Hero Section */
-    header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #1f1c2c, #928dab); }
-    header h1 { font-family: 'Orbitron', sans-serif; font-size: 4rem; color: var(--accent); animation: glitch 2s infinite; }
-    header p { font-size: 1.5rem; margin-top: 1rem; color: #fff; }
-
-    @keyframes glitch {
-        0% { text-shadow: 2px 2px #FF79C6, -2px -2px #8BE9FD; }
-        25% { text-shadow: -2px 2px #8BE9FD, 2px -2px #FF79C6; }
-        50% { text-shadow: 2px -2px #FF79C6, -2px 2px #8BE9FD; }
-        75% { text-shadow: -2px -2px #8BE9FD, 2px 2px #FF79C6; }
-        100% { text-shadow: 2px 2px #FF79C6, -2px -2px #8BE9FD; }
+  <meta charset="UTF-8">
+  <title>Classroom Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #1c3b2a; /* chalkboard green */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-
-    header .scroll-down { position: absolute; bottom: 50px; font-size: 1.2rem; animation: bounce 2s infinite; color: #fff; }
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
+    .chalkboard {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    /* Sections */
-    section { padding: 100px 10%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; gap: 40px; }
-    section h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
-    section p { font-size: 1.2rem; line-height: 1.8; }
-
-    /* Cards */
-    .card { background: rgba(255,255,255,0.05); padding: 20px; border-left: 3px solid var(--accent); border-radius: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card:hover { transform: translateY(-10px); box-shadow: 0 0 20px var(--accent); }
-
-    /* Project grid */
-    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .project { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; border: 2px solid var(--accent); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .project:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent); }
-
-    /* Contact Form */
-    form { display: flex; flex-direction: column; gap: 20px; }
-    input, textarea { padding: 15px; border: 2px solid var(--accent); border-radius: 10px; background: #0b0c10; color: #fff; font-size: 1rem; }
-    button { padding: 15px; border: none; border-radius: 10px; background: var(--accent); color: #0b0c10; font-size: 1.2rem; cursor: pointer; transition: transform 0.2s ease; }
-    button:hover { transform: scale(1.05); }
-
-    /* Animations on scroll */
-    .fade-in { opacity: 0; transform: translateY(30px); transition: all 1s ease; }
-    .fade-in.show { opacity: 1; transform: translateY(0); }
-</style>
+    .chalk-text {
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 3em;
+      color: #f8f8f8;
+      white-space: nowrap;
+      border-right: 2px solid transparent;
+      overflow: hidden;
+      width: 0;
+    }
+    .pencil {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/4/4c/Colored_pencil_icon.svg') no-repeat center/contain;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+    .duster {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 120%;
+      height: 100%;
+      background: #1c3b2a;
+      z-index: 10;
+    }
+    @keyframes writeText {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes movePencil {
+      0% { opacity: 1; left: 50%; }
+      100% { left: calc(50% + 300px); opacity: 1; }
+    }
+    @keyframes wipeBoard {
+      from { left: -100%; }
+      to { left: 0; }
+    }
+  </style>
 </head>
 <body>
+  <div class="chalkboard">
+    <div class="chalk-text">Classroom Studios from Malvin and Noku Coming Soon</div>
+    <div class="pencil"></div>
+    <div class="duster"></div>
+  </div>
+  <script>
+    const text = document.querySelector('.chalk-text');
+    const pencil = document.querySelector('.pencil');
+    const duster = document.querySelector('.duster');
 
-<div class="cursor"></div>
+    // Animate text writing
+    text.style.animation = "writeText 5s steps(40, end) forwards";
+    pencil.style.animation = "movePencil 5s linear forwards";
 
-<header>
-    <h1>Malvin Kawenya</h1>
-    <p>Aspiring Software Engineer | A-Level Student | Innovator | Frank Ocean Enthusiast</p>
-    <div class="scroll-down">⬇ Scroll Down ⬇</div>
-</header>
-
-<section id="about">
-    <h2>About Me</h2>
-    <div class="card fade-in">
-        <p>I am a passionate student focusing on Computer Science and Mathematics. I enjoy creating projects in Python, learning software engineering, and participating in environmental initiatives like the Eco-llution club.</p>
-    </div>
-    <div class="card fade-in">
-        <p>Outside academics, I pursue creative endeavors such as entrepreneurship (poster business “2”), content creation, and community projects including fish farming and sustainability efforts.</p>
-    </div>
-</section>
-
-<section id="achievements">
-    <h2>Achievements</h2>
-    <div class="card fade-in">O-Level Results: 2 A*s and 7 As</div>
-    <div class="card fade-in">Cambridge Additional Mathematics Success</div>
-    <div class="card fade-in">Karate medals and tournament achievements</div>
-    <div class="card fade-in">Environmental competition: World Ozone Day essay</div>
-</section>
-
-<section id="projects">
-    <h2>Projects</h2>
-    <div class="projects">
-        <div class="project fade-in">
-            <h3>Python Portfolio Projects</h3>
-            <p>Practical programming projects for Cambridge A-Level Computer Science (9618).</p>
-        </div>
-        <div class="project fade-in">
-            <h3>Startup “2” Posters</h3>
-            <p>Entrepreneurial project creating and selling room posters.</p>
-        </div>
-        <div class="project fade-in">
-            <h3>Fish Farming Initiative</h3>
-            <p>Home-based tilapia project with small and medium-sized fish management.</p>
-        </div>
-    </div>
-</section>
-
-<section id="contact">
-    <h2>Contact Me</h2>
-    <form>
-        <input type="text" placeholder="Your Name">
-        <input type="email" placeholder="Your Email">
-        <textarea placeholder="Your Message" rows="5"></textarea>
-        <button type="submit">Send Message</button>
-    </form>
-</section>
-
-<script>
-    // Cursor tracking
-    const cursor = document.querySelector('.cursor');
-    document.addEventListener('mousemove', e => {
-        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-
-    // Scroll animations
-    const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = { threshold: 0.2, rootMargin: "0px 0px -50px 0px" };
-    const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
-        entries.forEach(entry => {
-            if(!entry.isIntersecting) return;
-            entry.target.classList.add('show');
-            appearOnScroll.unobserve(entry.target);
-        });
-    }, appearOptions);
-    faders.forEach(fader => appearOnScroll.observe(fader));
-</script>
-
+    // After writing, show duster
+    setTimeout(() => {
+      pencil.style.opacity = 0;
+      duster.style.animation = "wipeBoard 2s forwards";
+    }, 6000);
+  </script>
 </body>
 </html>
