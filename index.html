@@ -1,89 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Classroom Studios</title>
-  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #1c3b2a; /* chalkboard green */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .chalkboard {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .chalk-text {
-      font-family: 'Gloria Hallelujah', cursive;
-      font-size: 3em;
-      color: #f8f8f8;
-      white-space: nowrap;
-      border-right: 2px solid transparent;
-      overflow: hidden;
-      width: 0;
-    }
-    .pencil {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/4/4c/Colored_pencil_icon.svg') no-repeat center/contain;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-    }
-    .duster {
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 120%;
-      height: 100%;
-      background: #1c3b2a;
-      z-index: 10;
-    }
-    @keyframes writeText {
-      from { width: 0 }
-      to { width: 100% }
-    }
-    @keyframes movePencil {
-      0% { opacity: 1; left: 50%; }
-      100% { left: calc(50% + 300px); opacity: 1; }
-    }
-    @keyframes wipeBoard {
-      from { left: -100%; }
-      to { left: 0; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classroom Studios — Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+<style>
+body, html {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f2b19;
+  font-family: 'Caveat', cursive;
+  overflow: hidden;
+}
+.board {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  height: 60vh;
+  background: #123c23;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.text {
+  font-size: 3em;
+  color: #fff;
+  white-space: pre-wrap;
+  text-align: center;
+  opacity: 0;
+}
+.duster {
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 120%;
+  height: 60px;
+  background: #123c23;
+  z-index: 10;
+}
+.dust {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  filter: blur(1px);
+  opacity: 0;
+}
+</style>
 </head>
 <body>
-  <div class="chalkboard">
-    <div class="chalk-text">Classroom Studios from Malvin and Noku Coming Soon</div>
-    <div class="pencil"></div>
-    <div class="duster"></div>
-  </div>
-  <script>
-    const text = document.querySelector('.chalk-text');
-    const pencil = document.querySelector('.pencil');
-    const duster = document.querySelector('.duster');
+<div class="board">
+  <div class="text" id="chalkText">Classroom Studios\nfrom Malvin & Noku\nComing Soon</div>
+  <div class="duster" id="duster"></div>
+</div>
+<script>
+const chalkText = document.getElementById('chalkText');
+const duster = document.getElementById('duster');
+const lines = chalkText.textContent.split('\\n');
+chalkText.textContent = '';
+const dusts = [];
 
-    // Animate text writing
-    text.style.animation = "writeText 5s steps(40, end) forwards";
-    pencil.style.animation = "movePencil 5s linear forwards";
+function spawnDust(x,y){
+  const dust = document.createElement('div');
+  dust.className = 'dust';
+  dust.style.left = x+'px';
+  dust.style.top = y+'px';
+  document.body.appendChild(dust);
+  dusts.push(dust);
+  dust.animate([{opacity:1, transform:'scale(1)'},{opacity:0, transform:'scale(0.3)'}], {duration:600, easing:'ease-out'});
+  setTimeout(()=>{dust.remove();},600);
+}
 
-    // After writing, show duster
-    setTimeout(() => {
-      pencil.style.opacity = 0;
-      duster.style.animation = "wipeBoard 2s forwards";
-    }, 6000);
-  </script>
+async function writeText(){
+  for(let line of lines){
+    for(let i=0;i<=line.length;i++){
+      chalkText.textContent = lines.slice(0,lines.indexOf(line)).join('\\n') + '\\n' + line.slice(0,i);
+      const rect = chalkText.getBoundingClientRect();
+      spawnDust(rect.left + Math.random()*rect.width, rect.top + Math.random()*rect.height);
+      await new Promise(r=>setTimeout(r,60));
+    }
+    await new Promise(r=>setTimeout(r,300));
+  }
+}
+
+function wipeBoard(){
+  return new Promise(r=>{
+    duster.style.transition = 'transform 1.5s ease, opacity 0.3s ease';
+    duster.style.opacity = 1;
+    duster.style.transform = 'translateX(100vw)';
+    setTimeout(()=>{
+      chalkText.textContent = '';
+      duster.style.transition = '';
+      duster.style.transform = 'translateX(-100%)';
+      duster.style.opacity = 0;
+      r();
+    },1500);
+  });
+}
+
+async function loop(){
+  while(true){
+    await writeText();
+    await new Promise(r=>setTimeout(r,600));
+    await wipeBoard();
+    await new Promise(r=>setTimeout(r,500));
+  }
+}
+
+loop();
+</script>
 </body>
 </html>
